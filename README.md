@@ -6,7 +6,7 @@
 
 <div align="center">
 
-<video src="https://github.com/xavieryyyyyy/GPIO-Button-Control_with_LEDS/raw/main/media/demo.mp4" controls width="720">
+<video src="https://github.com/xavieryyyyyy/GPIO-Button-Control_with_LEDS/raw/main/demo.mp4" controls width="720">
   Your browser does not support the video tag.
 </video>
 
