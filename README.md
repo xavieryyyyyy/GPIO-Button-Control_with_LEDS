@@ -8,34 +8,34 @@ A simple ESP32-S3 GPIO project demonstrating **digital input**, **internal pull-
 
 <br>
 
-<img src="https://img.shields.io/badge/Board-ESP32--S3-000000?style=for-the-badge&logo=espressif&logoColor=white">
-<img src="https://img.shields.io/badge/Framework-Arduino-00979D?style=for-the-badge&logo=arduino&logoColor=white">
-<img src="https://img.shields.io/badge/Language-C++-00599C?style=for-the-badge&logo=cplusplus&logoColor=white">
-<img src="https://img.shields.io/badge/Status-Completed-22C55E?style=for-the-badge">
+<img src="https://img.shields.io/badge/Board-ESP32--S3-000000?style=for-the-badge&logo=espressif&logoColor=white" alt="ESP32-S3">
+<img src="https://img.shields.io/badge/Framework-Arduino-00979D?style=for-the-badge&logo=arduino&logoColor=white" alt="Arduino">
+<img src="https://img.shields.io/badge/Language-C++-00599C?style=for-the-badge&logo=cplusplus&logoColor=white" alt="C++">
+<img src="https://img.shields.io/badge/Status-Completed-22C55E?style=for-the-badge" alt="Completed">
 
 <br><br>
 
-<img src="media/circuit.jpg" width="720" alt="ESP32-S3 GPIO Button Control Circuit">
+<img src="./media/circuit.jpg" width="720" alt="ESP32-S3 GPIO Button Control Circuit">
 
 </div>
 
 ---
 
-## <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/info.svg" width="22"> Overview
+## <img src="./assets/icons/info.svg" width="21" height="21" alt="Info"> Overview
 
 This laboratory activity demonstrates GPIO input and output control using an **ESP32-S3 N16R8**.
 
 A pushbutton connected to **GPIO 42** controls two LEDs:
 
 - The **red LED** on GPIO 41 turns ON while the button is pressed.
-- The **green LED** on GPIO 40 shows the opposite state.
+- The **green LED** on GPIO 40 displays the opposite state.
 - When the button is released, the green LED remains ON and the red LED remains OFF.
 
 The pushbutton uses the ESP32's built-in `INPUT_PULLUP` configuration to maintain a stable input state and prevent floating GPIO readings.
 
 ---
 
-## <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/target.svg" width="22"> Objectives
+## <img src="./assets/icons/target.svg" width="21" height="21" alt="Target"> Objectives
 
 This laboratory activity aims to:
 
@@ -48,7 +48,7 @@ This laboratory activity aims to:
 
 ---
 
-## <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/cpu.svg" width="22"> Hardware
+## <img src="./assets/icons/cpu.svg" width="21" height="21" alt="Hardware"> Hardware
 
 | Component | Quantity | Description |
 |---|:---:|---|
@@ -63,7 +63,7 @@ This laboratory activity aims to:
 
 ---
 
-## <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/cable.svg" width="22"> Pin Configuration
+## <img src="./assets/icons/cable.svg" width="21" height="21" alt="Connections"> Pin Configuration
 
 | Device | GPIO | Configuration |
 |---|:---:|---|
@@ -87,13 +87,13 @@ GPIO 42 ── Pushbutton ───────── GND
 
 ---
 
-## <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/image.svg" width="22"> Circuit Setup
+## <img src="./assets/icons/image.svg" width="21" height="21" alt="Circuit"> Circuit Setup
 
 The following image shows the physical circuit used during the laboratory activity.
 
 <div align="center">
 
-<img src="media/circuit.jpg" width="750" alt="ESP32-S3 GPIO Circuit">
+<img src="./media/circuit.jpg" width="750" alt="ESP32-S3 GPIO Circuit">
 
 </div>
 
@@ -108,7 +108,7 @@ The circuit consists of:
 
 ---
 
-## <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/code-2.svg" width="22"> Source Code
+## <img src="./assets/icons/code-2.svg" width="21" height="21" alt="Code"> Source Code
 
 ```cpp
 #include <Arduino.h>
@@ -127,36 +127,29 @@ void setup() {
   pinMode(RED_LED_PIN, OUTPUT);
   pinMode(GREEN_LED_PIN, OUTPUT);
 
-  // Initial output state
-  // Button released:
-  // Red OFF, Green ON
+  // Initial state:
+  // Button released = Red OFF, Green ON
   digitalWrite(RED_LED_PIN, LOW);
   digitalWrite(GREEN_LED_PIN, HIGH);
 }
 
 void loop() {
-
   // INPUT_PULLUP logic:
-  // LOW  = pressed
-  // HIGH = released
+  // LOW  = button pressed
+  // HIGH = button released
   const bool pressed = (digitalRead(BUTTON_PIN) == LOW);
 
   if (pressed) {
-
-    // Button pressed
     digitalWrite(RED_LED_PIN, HIGH);
     digitalWrite(GREEN_LED_PIN, LOW);
-
   } else {
-
-    // Button released
     digitalWrite(RED_LED_PIN, LOW);
     digitalWrite(GREEN_LED_PIN, HIGH);
   }
 }
 ```
 
-The complete source code can also be found in:
+The complete source code is available in:
 
 ```text
 Lab3_GPIO_Button_Control.ino
@@ -164,9 +157,9 @@ Lab3_GPIO_Button_Control.ino
 
 ---
 
-## <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/workflow.svg" width="22"> Program Logic
+## <img src="./assets/icons/workflow.svg" width="21" height="21" alt="Logic"> Program Logic
 
-The button uses:
+The pushbutton is configured using:
 
 ```cpp
 pinMode(BUTTON_PIN, INPUT_PULLUP);
@@ -174,7 +167,7 @@ pinMode(BUTTON_PIN, INPUT_PULLUP);
 
 This activates the ESP32-S3's internal pull-up resistor.
 
-Therefore:
+### Button Released
 
 ```text
 Button Released
@@ -182,12 +175,12 @@ Button Released
       ▼
 GPIO 42 = HIGH
       │
-      ├──── Red LED   = OFF
+      ├── Red LED   = OFF
       │
-      └──── Green LED = ON
+      └── Green LED = ON
 ```
 
-When the button is pressed:
+### Button Pressed
 
 ```text
 Button Pressed
@@ -195,50 +188,51 @@ Button Pressed
       ▼
 GPIO 42 = LOW
       │
-      ├──── Red LED   = ON
+      ├── Red LED   = ON
       │
-      └──── Green LED = OFF
+      └── Green LED = OFF
 ```
 
 ---
 
-## <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/toggle-left.svg" width="22"> Why HIGH Means Released
+## <img src="./assets/icons/toggle-left.svg" width="21" height="21" alt="Input Logic"> Active-Low Input
 
 The pushbutton uses an **active-low configuration**.
 
-When the button is released, the ESP32's internal pull-up resistor keeps GPIO 42 connected logically toward **3.3 V**.
-
-Therefore:
+When the button is released, the ESP32-S3's internal pull-up resistor keeps GPIO 42 at a HIGH logic level.
 
 ```text
 Released → HIGH
 ```
 
-When the pushbutton is pressed, GPIO 42 becomes connected to **GND**.
-
-Therefore:
+When the button is pressed, GPIO 42 is connected to GND.
 
 ```text
 Pressed → LOW
 ```
 
-The program determines whether the button is pressed using:
+The program detects the pressed state using:
 
 ```cpp
 const bool pressed = (digitalRead(BUTTON_PIN) == LOW);
 ```
 
+### Button Logic
+
+| GPIO 42 | Button State |
+|:---:|---|
+| `HIGH` | Released |
+| `LOW` | Pressed |
+
 ---
 
-## <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/flask-conical.svg" width="22"> Testing Procedure
+## <img src="./assets/icons/flask-conical.svg" width="21" height="21" alt="Testing"> Testing Procedure
 
-The circuit was tested using the following sequence:
+The circuit was tested using four conditions.
 
 ### Test 1 — Initial State
 
-Power the ESP32-S3 without pressing the pushbutton.
-
-Expected:
+Power or reset the ESP32-S3 without pressing the pushbutton.
 
 ```text
 Button    = Released
@@ -251,8 +245,6 @@ Green LED = ON
 
 Press and hold the pushbutton.
 
-Expected:
-
 ```text
 Button    = Pressed
 GPIO 42   = LOW
@@ -262,9 +254,7 @@ Green LED = OFF
 
 ### Test 3 — Button Released
 
-Release the pushbutton.
-
-Expected:
+Release the pushbutton again.
 
 ```text
 Button    = Released
@@ -277,8 +267,6 @@ Green LED = ON
 
 Release the pushbutton and press the ESP32-S3 **RESET / EN** button.
 
-Expected after restart:
-
 ```text
 Red LED   = OFF
 Green LED = ON
@@ -286,7 +274,7 @@ Green LED = ON
 
 ---
 
-## <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/table-2.svg" width="22"> Observation Table
+## <img src="./assets/icons/table-2.svg" width="21" height="21" alt="Results"> Observation Table
 
 | Test | Button State | GPIO 42 | Red LED GPIO 41 | Green LED GPIO 40 | Result |
 |---|---|:---:|:---:|:---:|:---:|
@@ -297,27 +285,27 @@ Green LED = ON
 
 ---
 
-## <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/circle-help.svg" width="22"> Laboratory Questions
+## <img src="./assets/icons/circle-help.svg" width="21" height="21" alt="Questions"> Laboratory Questions
 
 ### 1. What are the GPIO connections?
 
-The pushbutton is connected to **GPIO 42** and GND.
+The pushbutton is connected between **GPIO 42 and GND**.
 
-The red LED is connected to **GPIO 41** through a 220 Ω resistor.
+The red LED is connected to **GPIO 41** through a **220 Ω resistor**.
 
-The green LED is connected to **GPIO 40** through another 220 Ω resistor.
+The green LED is connected to **GPIO 40** through another **220 Ω resistor**.
 
 ---
 
 ### 2. What happens when the button is released?
 
-When the button is released, GPIO 42 reads:
+GPIO 42 reads:
 
 ```text
 HIGH
 ```
 
-The resulting outputs are:
+The output becomes:
 
 ```text
 Red LED   = OFF
@@ -330,13 +318,13 @@ Green LED = ON
 
 Pressing the pushbutton connects GPIO 42 to GND.
 
-The input therefore becomes:
+GPIO 42 therefore reads:
 
 ```text
 LOW
 ```
 
-The resulting outputs are:
+The output becomes:
 
 ```text
 Red LED   = ON
@@ -347,37 +335,37 @@ Green LED = OFF
 
 ### 4. What do HIGH and LOW mean for the button?
 
-Because the input uses `INPUT_PULLUP`:
+Because the pushbutton uses `INPUT_PULLUP`:
 
-| GPIO Reading | Button State |
+| Reading | Meaning |
 |:---:|---|
-| `HIGH` | Released |
-| `LOW` | Pressed |
+| `HIGH` | Button released |
+| `LOW` | Button pressed |
 
-The button therefore operates using **active-low logic**.
+The pushbutton therefore uses **active-low logic**.
 
 ---
 
-### 5. Why does the input not randomly change when the button is released?
+### 5. Why does the input not randomly change when released?
 
-The internal pull-up resistor keeps GPIO 42 at a defined HIGH voltage level while the button is open.
+The ESP32-S3's internal pull-up resistor keeps GPIO 42 at a defined HIGH logic level while the pushbutton is open.
 
-Without a pull-up or pull-down resistor, the GPIO pin could become a **floating input**, which can result in unpredictable HIGH and LOW readings.
+Without a pull-up or pull-down resistor, the pin could become a **floating input**, which could result in unpredictable HIGH and LOW readings.
 
 ---
 
 ### 6. What happens after resetting the board?
 
-When the ESP32-S3 resets while the button is released, the `setup()` function runs again.
+When the board resets, `setup()` executes again.
 
-The program initializes:
+The initial LED states are set using:
 
 ```cpp
 digitalWrite(RED_LED_PIN, LOW);
 digitalWrite(GREEN_LED_PIN, HIGH);
 ```
 
-Therefore, the expected state after reset is:
+Therefore:
 
 ```text
 Red LED   = OFF
@@ -386,89 +374,106 @@ Green LED = ON
 
 ---
 
-## <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/video.svg" width="22"> Demonstration
+## <img src="./assets/icons/video.svg" width="21" height="21" alt="Video"> Demonstration
 
-A physical hardware demonstration was recorded to verify the circuit behavior.
+A physical hardware demonstration was recorded to verify the behavior of the circuit.
 
 <div align="center">
 
-### Hardware Demo
+<a href="./media/demo.mp4">
+  <img src="./media/demo-thumbnail.jpg" width="700" alt="ESP32-S3 GPIO Button Control Demonstration">
+</a>
 
-[![Watch the Demonstration](media/demo-thumbnail.jpg)](media/demo.mp4)
+<br>
 
 **Click the image above to view the demonstration video.**
 
 </div>
 
-The demonstration shows:
+The demonstration includes:
 
-1. Initial circuit state
+1. Initial state
 2. Button released
 3. Button pressed
 4. Button held
 5. Button released again
 6. ESP32-S3 reset
-7. Expected initial state after reset
+7. Expected state after reset
 
 ---
 
-## <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/check-circle-2.svg" width="22"> Success Criteria
-
-The laboratory activity is considered successful when:
+## <img src="./assets/icons/circle-check.svg" width="21" height="21" alt="Success"> Success Criteria
 
 - [x] GPIO connections are correctly identified
-- [x] Pushbutton input remains stable when released
+- [x] Button input remains stable when released
 - [x] Button released produces `HIGH`
 - [x] Button pressed produces `LOW`
-- [x] Red LED turns ON while the button is pressed
-- [x] Green LED turns OFF while the button is pressed
+- [x] Red LED turns ON when the button is pressed
+- [x] Green LED turns OFF when the button is pressed
 - [x] Green LED turns ON when the button is released
 - [x] Red LED turns OFF when the button is released
-- [x] Both LEDs always show opposite states
+- [x] Both LEDs display opposite states
 - [x] Reset produces the expected initial output
 
 ---
 
-## <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/folder-tree.svg" width="22"> Repository Structure
+## <img src="./assets/icons/folder-tree.svg" width="21" height="21" alt="Repository"> Repository Structure
 
 ```text
 Lab-3-GPIO-Button-Control/
 │
-├── Lab3_GPIO_Button_Control.ino
-├── README.md
+├── assets/
+│   └── icons/
+│       ├── book-open.svg
+│       ├── cable.svg
+│       ├── circle-check.svg
+│       ├── circle-help.svg
+│       ├── code-2.svg
+│       ├── cpu.svg
+│       ├── flask-conical.svg
+│       ├── folder-tree.svg
+│       ├── graduation-cap.svg
+│       ├── image.svg
+│       ├── info.svg
+│       ├── table-2.svg
+│       ├── target.svg
+│       ├── toggle-left.svg
+│       ├── video.svg
+│       └── workflow.svg
 │
-└── media/
-    ├── circuit.jpg
-    ├── demo-thumbnail.jpg
-    └── demo.mp4
+├── media/
+│   ├── circuit.jpg
+│   ├── demo-thumbnail.jpg
+│   └── demo.mp4
+│
+├── Lab3_GPIO_Button_Control.ino
+└── README.md
 ```
 
 ---
 
-## <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/book-open.svg" width="22"> Key Concepts
+## <img src="./assets/icons/book-open.svg" width="21" height="21" alt="Concepts"> Key Concepts
 
-This activity demonstrates several fundamental embedded-system concepts:
-
-`GPIO` • `Digital Input` • `Digital Output` • `INPUT_PULLUP` • `Active-Low Logic` • `LED Control` • `ESP32-S3`
+`ESP32-S3` • `GPIO` • `Digital Input` • `Digital Output` • `INPUT_PULLUP` • `Active-Low Logic` • `LED Control`
 
 ---
 
-## <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/graduation-cap.svg" width="22"> Conclusion
+## <img src="./assets/icons/graduation-cap.svg" width="21" height="21" alt="Conclusion"> Conclusion
 
-The laboratory activity successfully demonstrated digital GPIO control using an ESP32-S3.
+The laboratory activity successfully demonstrated digital GPIO input and output control using an ESP32-S3.
 
-The pushbutton was configured using `INPUT_PULLUP`, resulting in an active-low input where **HIGH represents the released state and LOW represents the pressed state**.
+The pushbutton was configured using `INPUT_PULLUP`, creating an active-low input where **HIGH represents the released state and LOW represents the pressed state**.
 
-The red and green LEDs were programmed to operate in opposite states. The internal pull-up resistor also prevented the button input from floating when released, resulting in stable and predictable GPIO readings.
+The red and green LEDs were programmed to operate in opposite states. The ESP32-S3's internal pull-up resistor also prevented GPIO 42 from floating when the pushbutton was released, producing stable and predictable input readings.
 
 ---
 
 <div align="center">
 
-### Laboratory Activity 3
+### ESP32-S3 GPIO & Button Control
 
-**GPIO and Button Control using ESP32-S3**
+**Laboratory Activity 3**
 
-Made for embedded systems laboratory experimentation.
+`GPIO 42` Button · `GPIO 41` Red LED · `GPIO 40` Green LED
 
 </div>
